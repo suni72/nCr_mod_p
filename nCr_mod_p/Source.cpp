@@ -8,37 +8,8 @@ int minInt(int x, int y)
 	return (x < y) ? x : y;
 }
 
-int nCrModNum(int n, int r, int p)
-//dynamic programming approach used to calculate nCr % p
-{
-	int* PascalRow = new int[r + 1];
-	for (int i = 1; i <= r; ++i)
-		PascalRow[i] = 0;
-	PascalRow[0] = 1;
-
-	for (int i = 1; i <= n; ++i)
-	{
-		for (int j = minInt(i, r); j >= 0; --j)		
-		//proceed horizontally through Pascal's triangle using smallest of i or r as bounds - note that the 
-		//iterations proceed in the reverse direction so that values from the previous run can be used to calculate
-		//values for the current run
-		{
-			if (j == 0)
-				PascalRow[j] = 1;
-			else
-				PascalRow[j] = PascalRow[j] + PascalRow[j - 1];
-		}
-		for (int k = 0; k <= minInt(i, r); ++k)
-			cout << PascalRow[k] << " ";
-		cout << endl;
-	}
-	cout << "nCr for " << n << "C" << r << " = " << PascalRow[r] << endl;
-
-	int copy = PascalRow[r];
-	delete[] PascalRow;
-	return copy % p;
-}
-
+int nCr(int n, int r)
+//dynamic programming approach used to calculate nCr using Pascal's triangle
 /*
 initial array: [1, 0, 0, 0, 0...]
 first run:     [1, 1, 0, 0, 0...]
@@ -58,6 +29,42 @@ Pascal's triangle shows the desired values
 			   / \ / \ / \
 3		      1   3   3   1
 */
+
+{
+	int* PascalRow = new int[r + 1];
+	for (int i = 1; i <= r; ++i)
+		PascalRow[i] = 0;
+	PascalRow[0] = 1;
+
+	for (int i = 1; i <= n; ++i)
+	{
+		for (int j = minInt(i, r); j >= 0; --j)
+			//proceed horizontally through Pascal's triangle using smallest of i or r as bounds - note that the 
+			//iterations proceed in the reverse direction so that values from the previous run can be used to calculate
+			//values for the current run
+		{
+			if (j == 0)
+				PascalRow[j] = 1;
+			else
+				PascalRow[j] = PascalRow[j] + PascalRow[j - 1];
+		}
+		for (int k = 0; k <= minInt(i, r); ++k)
+			cout << PascalRow[k] << " ";
+		cout << endl;
+	}
+	cout << "nCr for " << n << "C" << r << " = " << PascalRow[r] << endl;
+	int copy = PascalRow[r];
+	delete[] PascalRow;
+	return copy;
+}
+
+int nCrModNum(int n, int r, int p)
+{
+	
+	return nCr(n, r) % p;
+}
+
+
 
 int main()
 {
