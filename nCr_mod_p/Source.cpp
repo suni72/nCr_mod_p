@@ -21,13 +21,13 @@ value of r is used as cutoff because values of concern only require up to r valu
 
 Pascal's triangle shows the desired values
 
-0					1
+0				    1
 				   / \
-1			      1   1
+1			          1   1
 				 / \ / \
-2               1   2   1
-			   / \ / \ / \
-3		      1   3   3   1
+2                               1   2   1
+			       / \ / \ / \
+3		              1   3   3   1
 */
 
 {
